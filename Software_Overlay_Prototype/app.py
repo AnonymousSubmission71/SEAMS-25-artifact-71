@@ -67,8 +67,8 @@ async def update_configuration(request: UpdateRequest):
         with open(docker_compose_path, "r") as file:
             docker_compose_content = file.read()
 
-        # Replace all instances of "Fed1" with the new federation name
-        updated_content = re.sub(r"\bFed1\b", request.federation_name, docker_compose_content)
+        # Replace all instances of "Federation1" with the new federation name
+        updated_content = re.sub(r"\bFederation1\b", request.federation_name, docker_compose_content)
 
         # Update the port number before 1026 for OrionLD
         updated_content = re.sub(

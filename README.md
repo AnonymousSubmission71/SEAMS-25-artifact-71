@@ -35,7 +35,7 @@ Ensure the following are installed on your system:
   Verify the installation by running:
 
   ```bash
-  python --version
+  python3 --version
   ```
 
 - **Docker Engine:**  
@@ -86,7 +86,7 @@ Ensure the following are installed on your system:
 3. **Run the application for each federation:**
 
    ```bash
-   python app.py
+   python3 app.py
    ```
 
 4. **Access the API documentation** in your browser by visiting:
@@ -174,7 +174,9 @@ Ensure the following are installed on your system:
 
 2. **Execute the Run Monitoring** function to start monitoring services.
 
-3. **Verify** that all monitoring processes are active and running as expected.
+3. **Verify** that all monitoring processes are active and running as expected, you will see on the terminal two messages :
+- Hello, Policy Synchronizer!
+- Hello, collaboration monitoring!
 
 ---
 
@@ -182,7 +184,8 @@ Ensure the following are installed on your system:
 
 Each federation node requires context registration to manage federations, communities, data models, and functions.
 
-**Note:** The following instructions will create context for **four federations** with simplified configurations to facilitate understanding and experimentation.
+**Note:** The following instructions will create context for **four federations** with simplified configurations to facilitate understanding and experimentation. 
+Make sure to follow the exact order [Federation, Data Model, Community, Function etc.] because there are bidirectional relationships created automatically by the system that assume that this order has been followed.
 
 #### Federation 1
 
@@ -228,7 +231,8 @@ Each federation node requires context registration to manage federations, commun
   "origin": "France",
   "role_In_Federation": "Occupancy Data Provider",
   "has_Data_Models": ["datamodel1"],
-  "part_Of_Federation": "Federation1"
+  "part_Of_Federation": "Federation1",
+  "geographical_Location": ""
 }
 ```
 
@@ -368,13 +372,13 @@ Each federation node requires context registration to manage federations, commun
 
 ```json
 {
-  "function_Id": "convert_ngsi_ld_to_brick3",
-  "call_Function": "convert_ngsi_ld_to_brick",
-  "description": "This function converts NGSI-LD data model to Brick.",
-  "From_model": "NGSI-LD",
-  "To_model": "Brick",
+  "function_Id": "convert_brick_to_ngsi_ld3",
+  "call_Function": "convert_brick_to_ngsi_ld",
+  "description": "This function converts Brick data into NGSI-LD format.",
+  "From_model": "Brick",
+  "To_model": "NGSI-LD",
   "Version": "1.0",
-  "usage_Guide": "Accepts JSON input, outputs TTL format.",
+  "usage_Guide": "Accepts TTL input, outputs JSON format.",
   "packages": ["rdflib", "datetime", "json"]
 }
 ```
@@ -585,6 +589,15 @@ Due to a recent critical bug, a **manual context exchange** is required for inte
 
 This will initiate a context exchange between **Federation 1** and **Federation 2** using the target federation's ID. The exchange respects the data exchange policy, so if the policy does not allow it, the exchange will fail.
 
+For the rest (to make sure you can "play" with a fully connected network of federations):
+
+1. In Federation 1's app.py, use the Context Exchange After Collaboration endpoint with "Federation2" as the target.
+
+2. In Federation 2's app.py, run the endpoint with "Federation1" as the target, then run it again with "Federation3" as the target.
+
+3. In Federation 3's app.py, run the endpoint with "Federation2" as the target, then run it again with "Federation4" as the target.
+
+4. In Federation 4's app.py, run the endpoint with "Federation3" as the target
 ---
 
 ## Testing Data Interaction Between Communities
@@ -608,7 +621,7 @@ This section describes how **Community1** in **Federation 1** can interact with 
 3. **Run the script** to upload synthetic occupancy observations:
 
    ```bash
-   python community2_Occupancy.py
+   python3 community2_Occupancy.py
    ```
 
    This uploads synthetic occupancy data in **JSON format** to the broker.
@@ -630,7 +643,7 @@ This section describes how **Community1** in **Federation 1** can interact with 
 3. **Verify the data** in **TTL format** by running:
 
    ```bash
-   python verify.py
+   python3 verify.py
    ```
 
 ### Step 3: Create Data Interaction
@@ -666,7 +679,12 @@ We include instructions and a premade setup to **easily and quickly recreate the
 
 1. **Stop All Previous Terminals:**
 
-   Ensure all previously running terminals are stopped.
+   Ensure all previously running terminals are stopped. Also make sure to terminate any containers still running (to start from a clean-slate)
+  
+  ```bash
+   docker stop $(docker ps -q) && docker rm $(docker ps -aq)
+   ```
+
 
 2. **Navigate to the Experiment Folder:**
 
@@ -679,11 +697,11 @@ We include instructions and a premade setup to **easily and quickly recreate the
    The configuration script sets up federations and their interactions needed automatically for the experiment (so you don't have to do the previous steps again):
 
    ```bash
-   python Experiment_config.py
+   python3 Experiment_config.py
    ```
 
 4. **Clean the Results Folder:**
-
+  Make sure to remove all .txt files present in the Results folder. You can do so manually or by something like :
    ```bash
    cd Results
    rm -f *.txt
@@ -694,7 +712,7 @@ We include instructions and a premade setup to **easily and quickly recreate the
    In the **Federation 1** folder, run the `update_policy.py` script to execute **100 iterations** of policy updates:
 
    ```bash
-   python update_policy.py
+   python3 update_policy.py
    ```
 
 6. **Generate Results:**
@@ -702,7 +720,7 @@ We include instructions and a premade setup to **easily and quickly recreate the
    After completing the iterations, compile the results into an **Excel file**:
 
    ```bash
-   python Generate_excel.py
+   python3 Generate_excel.py
    ```
 
 9. **Visualize Results:**
@@ -710,7 +728,7 @@ We include instructions and a premade setup to **easily and quickly recreate the
    Analyze and visualize the outcomes:
 
    ```bash
-   python show_result.py
+   python3 show_result.py
    ```
 
 ### Expected Results

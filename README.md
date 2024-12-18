@@ -1,6 +1,6 @@
 # Redacted Software Overlay Prototype
 
-This README provides comprehensive instructions for setting up and using the 'redacted' Software Overlay prototype. The software allows federations of nodes to collaborate dynamically, exchange context, and manage interactions effectively. The instructions cover the configuration of multiple federations, communities, data models, functions, and policies, along with steps to run the services required by the tool, how to 'play' with a simple example of a possible interaction, and details to recreate experiments from the paper.
+This README provides comprehensive instructions for setting up and using the 'redacted' Software Overlay prototype. The software allows data space federations to collaborate dynamically, exchange context, and manage interactions effectively. The instructions cover the configuration of multiple federations, communities, data models, functions, and policies, along with steps to run the services required by the tool, how to 'play' with a simple example of a possible interaction, and details to recreate experiments from the paper.
 
 ---
 

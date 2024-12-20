@@ -6,20 +6,42 @@ This README provides comprehensive instructions for setting up and using the 're
 
 ## Table of Contents
 
-1. [Prerequisites](#prerequisites)
-2. [Installation and Configuration](#installation-and-configuration)
-   - [Step 1: Download the Source Code](#step-1-download-the-source-code)
-   - [Step 2: Run the Application](#step-2-run-the-application)
-   - [Step 3: Start the Containers](#step-3-start-the-containers)
-   - [Step 4: Run the Monitoring Services](#step-4-run-the-monitoring-services)
-   - [Step 5: Context Registration for Each Federation](#step-5-context-registration-for-each-federation)
-   - [Step 6: Policy Registration for Each Federation](#step-6-policy-registration-for-each-federation)
-   - [Step 7: Collaboration Initiation Between Federations](#step-7-collaboration-initiation-between-federations)
-   - [Step 8: Manual Context Exchange (Fallback)](#step-8-manual-context-exchange-fallback)
-3. [Testing Data Interaction Between Communities](#testing-data-interaction-between-communities)
-4. [Running the Second Adaptation Experiment](#running-the-second-adaptation-experiment)
-5. [Folder Structure](#folder-structure)
-6. [License](#license)
+- [Redacted Software Overlay Prototype](#redacted-software-overlay-prototype)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [](#)
+  - [Installation and Configuration](#installation-and-configuration)
+    - [Step 1: Download the Source Code](#step-1-download-the-source-code)
+    - [Step 2: Run the Application](#step-2-run-the-application)
+    - [Example Configuration for Each Federation](#example-configuration-for-each-federation)
+      - [Federation 1](#federation-1)
+      - [Federation 2](#federation-2)
+      - [Federation 3](#federation-3)
+      - [Federation 4](#federation-4)
+    - [Step 3: Start the Containers](#step-3-start-the-containers)
+    - [Step 4: Run the Monitoring Services](#step-4-run-the-monitoring-services)
+    - [Step 5: Context Registration for Each Federation](#step-5-context-registration-for-each-federation)
+      - [Federation 1](#federation-1-1)
+      - [Federation 2](#federation-2-1)
+      - [Federation 3](#federation-3-1)
+      - [Federation 4](#federation-4-1)
+    - [Step 6: Policy Registration for Each Federation](#step-6-policy-registration-for-each-federation)
+      - [Federation 1](#federation-1-2)
+      - [Federation 2](#federation-2-2)
+      - [Federation 3](#federation-3-2)
+      - [Federation 4](#federation-4-2)
+    - [Step 7: Collaboration Initiation Between Federations](#step-7-collaboration-initiation-between-federations)
+      - [Federation 1 → Federation 2](#federation-1--federation-2)
+      - [Federation 2 → Federation 3](#federation-2--federation-3)
+      - [Federation 3 → Federation 4](#federation-3--federation-4)
+    - [Step 8: Manual Context Exchange (Fallback)](#step-8-manual-context-exchange-fallback)
+  - [Testing Data Interaction Between Communities](#testing-data-interaction-between-communities)
+    - [Step 1: Set Up Community2 Endpoint](#step-1-set-up-community2-endpoint)
+    - [Step 2: Set Up Community1 Endpoint](#step-2-set-up-community1-endpoint)
+    - [Step 3: Create Data Interaction](#step-3-create-data-interaction)
+  - [Running the Second Adaptation Experiment](#running-the-second-adaptation-experiment)
+    - [Experiment Steps](#experiment-steps)
+    - [Expected Results](#expected-results)
 
 ---
 
@@ -46,8 +68,8 @@ Ensure the following are installed on your system:
   docker --version
   ```
 
-**Note:** The instructions contain details to create a **federation of federations** using **four example federations**. All context and details have been simplified for easier understanding and experimentation. All commands (e.g., registrations, interactions) should be executed via the API (`app.py`) of the relevant federation.
-
+**Note:** The instructions contain details to create a **federation of federations** using **four example federations** like in the figure below. All context and details have been simplified for easier understanding and experimentation. All commands (e.g., registrations, interactions) should be executed via the API (`app.py`) of the relevant federation.
+![Diagram](images/diagram.png)
 ---
 
 ## Installation and Configuration
@@ -679,7 +701,7 @@ We include instructions and a premade setup to **easily and quickly recreate the
 
 1. **Stop All Previous Terminals:**
 
-   Ensure all previously running terminals are stopped. Also make sure to terminate any containers still running (to start from a clean-slate)
+   Ensure all previously running terminals are stopped (including any rogue zombie processes). Also make sure to terminate any containers still running (to start from a clean-slate)
   
   ```bash
    docker stop $(docker ps -q) && docker rm $(docker ps -aq)

@@ -758,7 +758,7 @@ def on_response_message(client, userdata, message):
         pub_policy_topic=f"Federation/{config.FEDERATION_ID}/Policy/{pub_policy_id}"
         policy= Policy_Management_Service.subscribe_retrieve_policy(pub_policy_topic,config.FED_BROKER,
                                                                     int(config.FED_PORT),timeout=0.5)
-        policy=json.dumps(policy)
+        # policy=json.dumps(policy)
         Process(target=run_policy_client, args=(sender_broker, int(sender_port), pub_policy_topic,config.FEDERATION_ID,policy)).start()
         # if sub_topics:
         #     Process(target=subscribe_to_topics, args=(config.FED_BROKER, int(config.FED_PORT), sub_topics)).start()
